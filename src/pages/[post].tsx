@@ -1,6 +1,5 @@
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import type { PostsType, PostType } from 'src/types/microcms';
-import * as cheerio from 'cheerio';
 import Head from 'next/head';
 import Link from 'next/link';
 import { client } from 'src/libs/microcms';
@@ -18,12 +17,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async (context: GetStaticPropsContext<{ post: string }>) => {
   const contentId = context.params?.post;
   const post = await client.get<PostType>({ endpoint: 'posts', contentId: contentId });
-  const $ = cheerio.load(post.body);
-  const headings = $('h2,h3').toArray();
-  const toc = headings.map((heading) => {
-    return { text: heading.children[0].data, id: heading.attribs.id, name: heading.name };
-  });
-  return { props: { post: post, toc: toc } };
+  return { props: { post: post } };
 };
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -59,13 +53,11 @@ const Post = (props: Props) => {
         </header>
         <div className="sm:flex">
           <section dangerouslySetInnerHTML={{ __html: `${props.post.body}` }} className="sm:flex-1 article" />
-          {props.toc.length !== 0 && (
-            <>
-              <div className="hidden sm:block sm:border-r border-gray-300 dark:border-gray-600 sm:mx-3.5 lg:mx-4"></div>
-              <section className="hidden sm:block sm:w-1/4">
-                <div className="sm:sticky sm:top-121px lg:top-137px">
-                  <h6 className="sm:mb-7 lg:mb-8">目次</h6>
-                  <ul>
+          <div className="hidden sm:block sm:border-r border-gray-300 dark:border-gray-600 sm:mx-3.5 lg:mx-4"></div>
+          <section className="hidden sm:block sm:w-1/4">
+            <div className="sm:sticky sm:top-121px lg:top-137px">
+              <h6 className="sm:mb-7 lg:mb-8">目次</h6>
+              {/* <ul>
                     {props.toc.map((item) => {
                       return (
                         <li key={item.id} className={`${item.name === 'h3' ? 'sm:px-3.5 lg:px-4' : ''}`}>
@@ -75,11 +67,9 @@ const Post = (props: Props) => {
                         </li>
                       );
                     })}
-                  </ul>
-                </div>
-              </section>
-            </>
-          )}
+                  </ul> */}
+            </div>
+          </section>
         </div>
       </article>
     </>
