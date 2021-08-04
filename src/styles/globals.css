@@ -5,28 +5,75 @@
 @layer base {
   h1,
   h2,
-  h3,
+  h3 {
+    @apply font-bold;
+  }
   h4,
   h5,
   h6 {
-    @apply font-bold;
+    @apply font-semibold;
   }
   h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
+    @apply text-3xl sm:text-4xl lg:text-5xl;
   }
   h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl;
+    @apply text-2xl sm:text-3xl lg:text-4xl;
   }
   h3 {
-    @apply text-xl md:text-2xl lg:text-3xl;
+    @apply text-xl sm:text-2xl lg:text-3xl;
   }
   h4 {
-    @apply text-lg md:text-xl lg:text-2xl;
+    @apply text-lg sm:text-xl lg:text-2xl;
   }
   h5 {
-    @apply text-base md:text-lg lg:text-xl;
+    @apply text-base sm:text-lg lg:text-xl;
   }
   h6 {
-    @apply text-sm md:text-base lg:text-lg;
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+}
+
+@layer components {
+  .article h2,
+  .article h3,
+  .article h4,
+  .article h5,
+  .article p,
+  .article ol,
+  .article ul {
+    @apply mb-6 sm:mb-7 lg:mb-8;
+  }
+
+  .article h2,
+  .article h3,
+  .article h4,
+  .article h5 {
+    @apply border-b border-gray-300 dark:border-gray-600 py-1.5 sm:py-1.75 lg:py-2;
+  }
+  .article h2,
+  .article h3 {
+    @apply border-l-6 sm:border-l-7 lg:border-l-8 pr-3 sm:pr-3.5 lg:pr-4 pl-1.5 sm:pl-1.75 lg:pl-2;
+  }
+  .article h4,
+  .article h5 {
+    @apply px-3 sm:px-3.5 lg:px-4;
+  }
+  .article p,
+  .article ol,
+  .article ul {
+    @apply px-3 sm:px-3.5 lg:px-4;
+  }
+  .article ol,
+  .article ul {
+    @apply list-inside;
+  }
+  .article ol {
+    @apply list-decimal;
+  }
+  .article ul {
+    @apply list-disc;
+  }
+  .article a {
+    @apply font-medium text-blue-500 dark:text-blue-400;
   }
 }
